@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<title>Homepage</title>
+</head>
+<body class="container">
+	<table class="table table-hover">
+	<thead>
+	<tr>
+		<th>번호</th>
+		<th>제목</th>
+		<th>작성자 </th>
+		<th>날짜</th>
+		<th>조회수</th>
+	</tr>
+	</thead>
+	<tr>
+		<td>1</td>
+		<td>제목테스트</td>
+		<td>작성자테스트</td>
+		<td>날짜테스트</td>
+		<td>1</td>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>제목테스트</td>
+		<td>작성자테스트</td>
+		<td>날짜테스트</td>
+		<td>1</td>
+	</tr>
+	<!-- <tr th:each="board : ${boardList}">
+		<td th:text="${board?.idx}"></td>
+		<td th:text="${board?.title}"></td>
+		<td th:text="${board?.user}"></td>
+		<td th:text="${board?.date}"></td>
+		<td th:text="${board?.views}"></td>
+	</tr> -->
+	</table>
+
+</body>
+</html>
