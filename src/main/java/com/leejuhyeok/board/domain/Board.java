@@ -37,7 +37,7 @@ public class Board {
 	
 	@Column
 	@NotNull
-	public Long Views;
+	public Long views;
 	
 	
 	@Builder
@@ -45,7 +45,7 @@ public class Board {
 		this.title = title;
 		this.userName = userName;
 		this.date = date;
-		this.Views = 0L;
+		this.views = 0L;
 	}
 	
 	
