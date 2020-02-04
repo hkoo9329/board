@@ -22,9 +22,9 @@
 					<th class="col-md-1">조회수</th>
 				</tr>
 			</thead>
-			<tr th:each="board: ${boardList}">
+			<tr class="table-row" th:each="board: ${boardList}">
 				<td th:text="${board?.idx}"></td>
-				<td><a href="/board/page/" th:attrappend="href=${board?.idx}" th:text="${board?.title}"></a></td>
+				<td><b><a href="/board/page/" th:attrappend="href=${board?.idx}" th:text="${board?.title}"></a></b></td>
 				<td th:text="${board?.date} ? ${#temporals.format(board.date,'yyyy년 MM월 dd일 hh시 mm분')} : ''"></td>
 				<td th:text="${board?.userName}"></td>
 				<td th:text="${board?.views}"></td>
