@@ -39,7 +39,7 @@ public class BoardController {
 	@RequestMapping("/page/{idx}")
 	public String getBoardPage(@PathVariable("idx") Long idx, Model model) {
 		Board board = boardService.getOne(idx);
-		board.setViews(board.getViews()+1L);
+		boardService.viewsUpdate(idx);
 		model.addAttribute("board",board);
 		return "board";
 	}

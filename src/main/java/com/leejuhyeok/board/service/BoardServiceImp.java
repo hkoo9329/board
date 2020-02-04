@@ -58,6 +58,13 @@ public class BoardServiceImp implements BoardService{
 		// TODO Auto-generated method stub
 		return boardRepository.getOne(boardId);
 	}
+
+	@Override
+	public void viewsUpdate(Long boardId) {
+		// TODO Auto-generated method stub
+		boardRepository.viewUpate(boardId);
+		
+	}
 	
 	
 
