@@ -1,5 +1,7 @@
 package com.leejuhyeok.board.domain;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,32 +23,49 @@ public class Board {
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Long idx;
+	private Long idx;
 	
 	@Column
 	@NotNull
-	public String title;
+	private String title;
 	
 	@Column
-	@NotNull
-	public String userName;
+	private String content; 
 	
 	@Column
-	@NotNull
-	public String date;
+	private String userName;
+	
 	
 	@Column
-	@NotNull
-	public Long views;
+	private LocalDateTime date;
+	
+	@Column
+	private Long views;
 	
 	
 	@Builder
-	public Board(String title, String userName, String date) {
+	public Board(String title, String userName, String content, LocalDateTime date) {
 		this.title = title;
+		this.content = content;
 		this.userName = userName;
 		this.date = date;
 		this.views = 0L;
 	}
+	
+	public void setCreateDateTime() {
+		this.date = LocalDateTime.now();
+	}
+	public void setViews(Long views) {
+		this.views = views;
+	}
+	
+	public void update(Board newBoard) {
+		this.title = newBoard.title;
+		this.content = newBoard.content;
+		
+	}
+	
+	
 	
 	
 	

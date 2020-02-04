@@ -1,13 +1,116 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <title>게시글 작성</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<title>게시글 등록</title>
 </head>
 <body>
-    <h1>
-        Test
-    </h1>
+	<div class="container">
+	
+		<div class="page-header">
+			<h1>게시글 등록</h1>
+		</div>
+		<div class="pull-left">
+			<a href="/" class="btn btn-default">목록으로</a>
+		</div>
+		<div class="pull-right">
+			<button th:if="!${board?.idx}" type="button" class="btn btn-primary" id="insert">저장</button>
+			<button th:if="${board?.idx}" type="button" class="btn btn-info" id="update">수정</button>
+			<button th:if="${board?.idx}" type="button" class="btn btn-danger" id="delete">삭제</button>
+		</div>
+		<br/><br/> 
+		<input id="board_idx" type="hidden" th:value="${board?.idx}" />
+		<table class="table table-bordered">
+			<tr>
+				<th class="col-md-1">조회수</th>
+				<td class="col-md-2" th:text="${board?.views}"></td>
+				<th class="col-md-2">작성일</th>
+				<td class="col-md-3" th:text="${board?.date}"></td>
+				<th class="col-md-2">작성자</th>
+				<td class="col-md-3" th:text="${board?.userName}"></td>
+			</tr>
+			<tr>
+				<th style="padding: 13px 0 0 15px;">제목</th>
+				<td colspan="5"><input id="board_title" type="text"
+					class="col-md-1 form-control input-sm" th:value="${board?.title}" /></td>
+			</tr>
+			<tr>
+				<th style="padding: 13px 0 0 15px;">내용</th>
+				<td colspan="5"><textarea id="board_content"
+						class="col-md-1 form-control input-sm" rows="7"
+						style="height: 200px;" th:text="${board?.content}"></textarea><span
+					class="help-block"></span></td>
+			</tr>
+
+		</table>
+		
+	</div>
 </body>
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+
+	// 게시글 저장
+	$("#insert").click(function(){
+		var jsonData = JSON.stringify({
+			title: $('#board_title').val(),
+			content: $('#board_content').val()
+		});
+		$.ajax({
+			url: "/board/insert",
+			type: "POST",
+			data: jsonData,
+			contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+            	alert("저장 성공");
+            	location.href= "/";
+            },
+            error: function () {
+            	alert("저장 실패");
+            }
+		});
+	});
+	
+	//게시글 없데이트
+	$('#update').click(function(){
+		var jsonData = JSON.stringify({
+			title: $('#board_title').val(),
+			content: $('#board_content').val()
+		});
+		$.ajax({
+			url: "/board/update/"+$('#board_idx').val(),
+			type: "PUT",
+			data: jsonData,
+			contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+            	alert("수정 성공");
+            	location.href= "/";
+            },
+            error: function () {
+            	alert("수정 실패");
+            }
+		});
+	});
+	
+	
+	// 게시글 삭제
+	$('#delete').click(function(){
+		$.ajax({
+			url: "/board/delete/"+$('#board_idx').val(),
+			type: "DELETE",
+            success: function (data) {
+            	alert("삭제 성공");
+            	location.href= "/";
+            },
+            error: function () {
+            	alert("삭제 실패");
+            }
+		});
+	});
+	
+
+</script>
 </html>

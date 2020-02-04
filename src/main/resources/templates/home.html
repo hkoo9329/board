@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <title>Homepage</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<title>Homepage</title>
 </head>
 <body>
-<!-- main start-->
-<div class="container">
-    <div class="pull-right">
-        <div class="btn btn-primary">게시글 작성</div>
-    </div>
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>날짜</th>
-            <th>조회수</th>
-        </tr>
-        </thead>
-        <tr th:each="board: ${boardList}">
-            <td th:text="${board?.idx}"></td>
-            <td th:text="${board?.title}"></td>
-            <td th:text="${board?.userName}"></td>
-            <td th:text="${board?.date}"></td>
-            <td th:text="${board?.views}"></td>
-        </tr>
-    </table>
-</div>
-<!-- main end-->
+	<!-- main start-->
+	<div class="container">
+	<h1>게시판</h1>
+		<div class="pull-right">
+			<a href="/board" class="btn btn-primary">게시글 작성</a>
+		</div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th class="col-md-1">번호</th>
+					<th class="col-md-5">제목</th>
+					<th class="col-md-3">날짜</th>
+					<th class="col-md-2">작성자</th>
+					<th class="col-md-1">조회수</th>
+				</tr>
+			</thead>
+			<tr th:each="board: ${boardList}">
+				<td th:text="${board?.idx}"></td>
+				<td><a href="/board/page/" th:attrappend="href=${board?.idx}" th:text="${board?.title}"></a></td>
+				<td th:text="${board?.date}"></td>
+				<td th:text="${board?.userName}"></td>
+				<td th:text="${board?.views}"></td>
+			</tr>
+		</table>
+	</div>
+	<!-- main end-->
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-    $(".pull-right").click(function () {
-        window.location.href = "/board";
-    });
+	
 </script>
 </html>

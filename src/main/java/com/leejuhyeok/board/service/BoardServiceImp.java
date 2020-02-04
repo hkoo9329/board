@@ -22,8 +22,8 @@ public class BoardServiceImp implements BoardService{
 	@Override
 	public void insertBoard(Board board) {
 		// TODO Auto-generated method stub
-		log.info(board.getTitle());
 		board.setCreateDateTime();
+		board.setViews(0L);
 		boardRepository.save(board);
 		
 	}
@@ -52,5 +52,13 @@ public class BoardServiceImp implements BoardService{
         }
 		return boardRepository.findAll(pageable);
 	}
+
+	@Override
+	public Board getOne(Long boardId) {
+		// TODO Auto-generated method stub
+		return boardRepository.getOne(boardId);
+	}
+	
+	
 
 }

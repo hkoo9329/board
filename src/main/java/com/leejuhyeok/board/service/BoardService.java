@@ -10,6 +10,7 @@ public interface BoardService {
 	void insertBoard(Board board);
 	void updateBoard(Long boardId, Board newBoard);
 	void deleteBoard(Long boardId);
+	Board getOne(Long boardId);
 	Page<Board> findBoardList(Pageable pageable);
 
 }
