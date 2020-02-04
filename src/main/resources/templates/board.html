@@ -68,11 +68,11 @@
 					contentType : "application/json",
 					dataType : "json",
 					success : function(data) {
-						alert("저장 성공");
+						alert("저장 성공!");
 						location.href = "/";
 					},
 					error : function(request, status, error) {
-						alert("저장 실패 제목을 작성했는지 확인해주세요.");
+						alert("제목을 작성했는지 확인해주세요.");
 						console.log("code:" + request.status + "\n" + "message:"
 								+ request.responseText + "\n" + "error:"
 								+ error);
