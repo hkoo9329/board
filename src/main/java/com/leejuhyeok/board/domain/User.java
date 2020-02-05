@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table
 public class User {
 	
 	@Id

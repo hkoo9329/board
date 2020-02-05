@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.leejuhyeok.board.domain.Board;
 import com.leejuhyeok.board.repository.CommentRepository;
 import com.leejuhyeok.board.service.BoardService;
-import com.mysql.cj.util.StringUtils;
 
 
 import java.util.HashMap;
@@ -20,7 +19,6 @@ import java.util.Map;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -50,27 +48,27 @@ public class BoardController {
 		Board board = boardService.getOne(idx);
 		Cookie cookies[] = request.getCookies();
 		Map<String,String> mapCookie = new HashMap();
-		// ÀúÀåµÈ ÄíÅ° ºÒ·¯¿À±â
+		// ì €ì¥ëœ ì¿ í‚¤ ë¶ˆëŸ¬ì˜¤ê¸°
 		if(request.getCookies() != null) {
 			for(int i=0; i< cookies.length; i++) {
 				Cookie obj = cookies[i];
 				mapCookie.put(obj.getName(), obj.getValue());
 			}
 		}
-		// ÀúÀåµÈ ÄíÅ°Áß¿¡ read_count ¸¸ ºÒ·¯¿À±â
+		// ì €ì¥ëœ ì¿ í‚¤ì¤‘ì— read_count ë§Œ ë¶ˆëŸ¬ì˜¤ê¸°
 		String cookie_read_count = (String) mapCookie.get("read_count");
-		// ÀúÀåµÉ »õ·Î¿î ÄíÅ°°ª »ı¼º
+		// ì €ì¥ë  ìƒˆë¡œìš´ ì¿ í‚¤ê°’ ìƒì„±
 		String new_cookie_read_count= "|" +idx;
-		
-		//ÀúÀåµÈ ÄíÅ°¿¡ »õ·Î¿î ÄíÅ°°ªÀÌ Á¸ÀçÇÏ´Â Áö °Ë»ç
-		if (StringUtils.indexOfIgnoreCase(cookie_read_count, new_cookie_read_count) == -1) {
-			// ¾øÀ» °æ¿ì ÄíÅ° »ı¼º
-			Cookie cookie = new Cookie("read_count", cookie_read_count + new_cookie_read_count);
-			
-			response.addCookie(cookie);
-			//Á¶È¸¼ö ¾÷µ¥ÀÌÆ®
-			boardService.viewsUpdate(idx);
-		}
+
+		//ì €ì¥ëœ ì¿ í‚¤ì— ìƒˆë¡œìš´ ì¿ í‚¤ê°’ì´ ì¡´ì¬í•˜ëŠ” ì§€ ê²€ì‚¬
+//		if (StringUtils.indexOfIgnoreCase(cookie_read_count, new_cookie_read_count) == -1) {
+//			// ì—†ì„ ê²½ìš° ì¿ í‚¤ ìƒì„±
+//			Cookie cookie = new Cookie("read_count", cookie_read_count + new_cookie_read_count);
+//
+//			response.addCookie(cookie);
+//			//ì¡°íšŒìˆ˜ ì—…ë°ì´íŠ¸
+//			boardService.viewsUpdate(idx);
+//		}
 		model.addAttribute("board",board);
 		model.addAttribute("commentList",commentRepository.findByBoardIdx(board.getIdx()));
 		return "board";
