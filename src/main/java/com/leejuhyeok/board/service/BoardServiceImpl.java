@@ -31,8 +31,7 @@ public class BoardServiceImpl implements BoardService{
 	public void updateBoard(Long boardId, Board newBoard) {
 		// TODO Auto-generated method stub
 		Board oldBoard = boardRepository.getOne(boardId);
-		oldBoard.update(newBoard);
-		boardRepository.save(oldBoard);
+		boardRepository.save(oldBoard.update(newBoard));
 		
 	}
 

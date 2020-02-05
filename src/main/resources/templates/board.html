@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
 <title>게시글 등록</title>
 </head>
 <body>
@@ -57,7 +58,7 @@
 
 	<div class="container" th:if="${board?.idx}">
 		<label for="content">comment</label>
-		<span th:text="|댓글 ${#lists.size(commentList)} 개|"></span>
+		<span th:text="|댓글 ${#lists.size(commentList)-1} 개|"></span>
 
 		<div class="form-group">
 			<!-- th:if="${board.user?.name}" -->
@@ -68,13 +69,14 @@
 				<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>
 			</span>
 		</div>
-		<br><br>
+		<br>
 		<!-- <div class="panel panel-default">
 			<p th:unless="${board.user?.name}" class="panel-body text-center h4">로그인
 				후에 이용해주세요</p>
 		</div> -->
+		
 
-		<div class="container">
+		<!-- <div class="container">
 			<div class="commentList" th:each="comment : ${commentList}">
 				<div>
 					<span class="h4">유저이름</span> <span th:text="${comment?.date}"></span>
@@ -84,8 +86,8 @@
 				</div>
 
 			</div>
-		</div>
-	</div>
+		</div> 
+	</div>-->
 </body>
 
 <script src="/js/jquery-3.4.1.min.js"></script>

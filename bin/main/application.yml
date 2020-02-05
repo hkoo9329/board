@@ -9,3 +9,17 @@ spring:  jpa:    show-sql: true
     username: hkoo
     password: dlwngur12
     driver-class-name: com.mysql.cj.jdbc.Driver
+    
+  thymeleaf:    cache: false
+    
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 494197804420-1ke3o3d15mt52k0n5k54ip8920ciujjp.apps.googleusercontent.com
+            client-secret: sdZkIXaOdfTnBiIsP8VUdok8
+            scope: profile, email
+          github:
+            client-id: 751884639d49a11cafdb
+            client-secret: 8b21e4cc9bcabb3bdc8991f0a11784295607a998

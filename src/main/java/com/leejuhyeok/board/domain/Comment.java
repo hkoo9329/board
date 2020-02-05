@@ -4,9 +4,12 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -28,6 +31,10 @@ public class Comment {
 	@Column(columnDefinition = "TEXT")
     private String comment;
 	
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name="board_id",nullable = false)
+	private Board board;
+	
 	@OneToOne
 	private User user;
 	
@@ -35,9 +42,10 @@ public class Comment {
 	private LocalDateTime date;
 	
 	@Builder
-	public Comment(String comment, User user) {
+	public Comment(String comment, User user, Board board) {
 		this.comment = comment;
 		this.user = user;
+		this.board =board;
 	}
 	public void setCreateDateTime() {
 		this.date = LocalDateTime.now();

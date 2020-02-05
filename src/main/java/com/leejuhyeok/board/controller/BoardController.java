@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -43,8 +45,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/page/{idx}")
-	public String getBoardPage(HttpServletResponse response, HttpServletRequest request,
-			@PathVariable("idx") Long idx, Model model) {
+	public String getBoardPage(HttpServletResponse response, 
+			HttpServletRequest request, @PathVariable("idx") Long idx, Model model) {
 		Board board = boardService.getOne(idx);
 		Cookie cookies[] = request.getCookies();
 		Map<String,String> mapCookie = new HashMap();
@@ -69,8 +71,8 @@ public class BoardController {
 			//조회수 업데이트
 			boardService.viewsUpdate(idx);
 		}
-		model.addAttribute("commentList",commentRepository.findAll());
 		model.addAttribute("board",board);
+		model.addAttribute("commentList",commentRepository.findByBoardIdx(board.getIdx()));
 		return "board";
 	}
 

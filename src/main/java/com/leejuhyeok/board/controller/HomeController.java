@@ -21,5 +21,11 @@ public class HomeController {
 		model.addAttribute("boardList", boardService.findBoardList(pageable));
 		return "home";
 	}
+	
+	// 임시 코드 확인하면 제거 바람
+	@RequestMapping("/login")
+	public String login() {
+		return "login";
+	}
 
 }

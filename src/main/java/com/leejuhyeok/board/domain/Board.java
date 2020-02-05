@@ -63,9 +63,11 @@ public class Board {
 		this.views = views;
 	}
 	
-	public void update(Board newBoard) {
+	public Board update(Board newBoard) {
 		this.title = newBoard.title;
 		this.content = newBoard.content;
+		
+		return this;
 		
 	}
 	
