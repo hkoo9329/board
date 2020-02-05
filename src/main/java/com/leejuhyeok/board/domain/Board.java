@@ -8,9 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -35,9 +35,6 @@ public class Board {
 	@Column
 	private String content; 
 	
-	@Column
-	private String userName;
-	
 	
 	@Column
 	private LocalDateTime date;
@@ -45,14 +42,18 @@ public class Board {
 	@Column
 	private Long views;
 	
+	@OneToOne
+	private User user;
+	
 	
 	@Builder
-	public Board(String title, String userName, String content, LocalDateTime date) {
+	public Board(String title, String userName, String content, LocalDateTime date, Long views,
+			User user) {
 		this.title = title;
 		this.content = content;
-		this.userName = userName;
 		this.date = date;
-		this.views = 0L;
+		this.user = user;
+		this.views = views;
 	}
 	
 	public void setCreateDateTime() {

@@ -9,3 +9,5 @@ spring:  jpa:    show-sql: true
     username: hkoo
     password: dlwngur12
     driver-class-name: com.mysql.cj.jdbc.Driver
+    
+  thymeleaf:    cache: false

@@ -29,7 +29,7 @@
 		<table class="table table-bordered">
 			<tr>
 				<th class="col-md-1">조회수</th>
-				<td class="col-md-2" th:text="${board?.views}"></td>
+				<td class="col-md-1" th:text="${board?.views}"></td>
 				<th class="col-md-2">작성일</th>
 				<td class="col-md-3"
 					th:text="${board?.date} ? ${#temporals.format(board.date,'yyyy년 MM월 dd일 hh시 mm분')} : ''"></td>
@@ -57,17 +57,18 @@
 
 	<div class="container" th:if="${board?.idx}">
 		<label for="content">comment</label>
-		<!-- <span th:text="|댓글 ${댓글 갯수 변수명 } 개|"></span> -->
+		<span th:text="|댓글 ${#lists.size(commentList)} 개|"></span>
 
 		<div class="form-group">
 			<!-- th:if="${board.user?.name}" -->
 			<!--  <input type="hidden" name="bno" value="${detail.bno}"/> -->
-			<textarea class="form-control" id="comment"placeholder="내용을 입력하세요."
-				></textarea>
-			<span class="form-group-btn">
+			<textarea class="form-control" id="comment" placeholder="내용을 입력하세요."
+				onKeypress="javascript:if(event.keyCode==13) { $('#commentInsertBtn').click() }"></textarea>
+			<span class="form-group-btn pull-right">
 				<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>
 			</span>
 		</div>
+		<br><br>
 		<!-- <div class="panel panel-default">
 			<p th:unless="${board.user?.name}" class="panel-body text-center h4">로그인
 				후에 이용해주세요</p>
@@ -77,6 +78,8 @@
 			<div class="commentList" th:each="comment : ${commentList}">
 				<div>
 					<span class="h4">유저이름</span> <span th:text="${comment?.date}"></span>
+					<button id="commentDeleteBtn" class="pull-right btn btn-danger btn-xs">삭제</button>
+					<button id="commentUpdateBtn" class="pull-right btn btn-primary btn-xs">수정 </button>
 					<p th:text="${comment?.comment}"></p>
 				</div>
 
@@ -89,10 +92,9 @@
 <script type="text/javascript">
 	// 댓글 등록
 	$('#commentInsertBtn').click(
-			consol.log($('#comment').val().replace("\r\n","<br>"));
 			function() {
 				var jsonData = JSON.stringify({
-					comment : $('#comment').val().replace("\r\n","<br>")
+					comment : $('#comment').val()
 				});
 				$.ajax({
 					url : "/board/comment/insert",
@@ -112,7 +114,13 @@
 					}
 				});
 			});
-
+	// 댓글 업데이트
+	
+	// 댓글 삭제
+	$('#commentDeleteBtn').click(function(){
+		console.log("s");
+	});
+	
 	// 게시글 저장
 	$("#insert").click(
 			function() {
