@@ -10,7 +10,7 @@
 
 	<!-- 메인 게시글 -->
 	<div class="container" style="height: 100%;">
-
+		
 		<div class="page-header">
 			<h1>게시글 등록</h1>
 		</div>
@@ -70,6 +70,42 @@
 			</span>
 		</div>
 		<br>
+		<div class="container" th:if="${#lists.size(commentList) > 0 }">
+            <div class="panel-body container-fluid">
+                <ul class="list-group">
+                    <li class="list-group-item" th:each="comment : ${commentList}">
+                        <div class="row">
+                            <div class="col-xs-2 col-md-1">
+                                <img src="/images/default_user.jpg" class="img-circle img-responsive" alt="" /></div>
+                            <div class="col-xs-10 col-md-11">
+                                <!-- 댓글 정보 부분 -->
+                                <div>
+                                    <div class="mic-info">
+                                        <a>유저이름</a> <span th:text="${comment.date}" style="margin-left:10px;"></span>
+                                    </div>
+                                </div>
+                                <!-- 댓글 버튼 부분 -->
+                                <div class="action pull-right">
+                                    <button type="button" class="btn btn-primary btn-xs" title="Edit">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-xs" title="Delete">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </div>
+                                <!-- 댓글 content부분  -->
+                                <div class="comment-text" th:text="${comment.comment}" style="margin-top: 0.5em;">
+                                   
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <a href="#" class="btn btn-primary btn-sm btn-block" role="button"><span class="glyphicon glyphicon-refresh"></span> More</a>
+            </div>
+        </div>
+    </div>
 		<!-- <div class="panel panel-default">
 			<p th:unless="${board.user?.name}" class="panel-body text-center h4">로그인
 				후에 이용해주세요</p>
