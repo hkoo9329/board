@@ -1,17 +1,14 @@
 package com.leejuhyeok.board.domain.enums;
 
 import lombok.Getter;
-
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
 public enum Role {
-	
-	GUEST("ROLE_GUEST", "¼Õ´Ô"),
-	USER("ROLE_USER", "ÀÏ¹İ »ç¿ëÀÚ");
-	
-	private final String key;
-	private final String title;
+    GUSET("ROLE_GUEST", "ì†ë‹˜"),
+    USER("ROLE_USER","ì¼ë°˜ ì‚¬ìš©ì");
 
+    private final String key;
+    private final String title;
 }

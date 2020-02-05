@@ -22,33 +22,35 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table
 public class Comment {
-	
-	@Id
-	@Column
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idx;
-	
-	@Column(columnDefinition = "TEXT")
+
+    @Id
+    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idx;
+
+    @Column(columnDefinition = "TEXT")
     private String comment;
-	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name="board_id",nullable = false)
-	private Board board;
-	
-	@OneToOne
-	private User user;
-	
-	@Column
-	private LocalDateTime date;
-	
-	@Builder
-	public Comment(String comment, User user, Board board) {
-		this.comment = comment;
-		this.user = user;
-		this.board =board;
-	}
-	public void setCreateDateTime() {
-		this.date = LocalDateTime.now();
-	}
-	
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(nullable = false)
+    private Board board;
+
+    @OneToOne
+    private User user;
+
+    @Column
+    private LocalDateTime date;
+
+    @Builder
+    public Comment(String comment, User user, Board board, LocalDateTime date) {
+        this.comment = comment;
+        this.user = user;
+        this.board = board;
+        this.date = date;
+    }
+
+    public void setCreateDateTime() {
+        this.date = LocalDateTime.now();
+    }
+
 }
