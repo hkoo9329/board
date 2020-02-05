@@ -6,6 +6,8 @@
 <title>게시글 등록</title>
 </head>
 <body>
+
+	<!-- 메인 게시글 -->
 	<div class="container" style="height: 100%;">
 
 		<div class="page-header">
@@ -22,8 +24,8 @@
 			<button th:if="${board?.idx}" type="button" class="btn btn-danger"
 				id="delete">삭제</button>
 		</div>
-		<br />
-		<br /> <input id="board_idx" type="hidden" th:value="${board?.idx}" />
+		<br /> <br /> <input id="board_idx" type="hidden"
+			th:value="${board?.idx}" />
 		<table class="table table-bordered">
 			<tr>
 				<th class="col-md-1">조회수</th>
@@ -32,7 +34,7 @@
 				<td class="col-md-3"
 					th:text="${board?.date} ? ${#temporals.format(board.date,'yyyy년 MM월 dd일 hh시 mm분')} : ''"></td>
 				<th class="col-md-2">작성자</th>
-				<td class="col-md-3" th:text="${board?.userName}"></td>
+				<td class="col-md-3">유저이름</td>
 			</tr>
 			<tr>
 				<th style="padding: 13px 0 0 15px;">제목</th>
@@ -50,26 +52,67 @@
 		</table>
 
 	</div>
-	<div class="container">
-        <label for="content">comment</label>
-        <form name="commentInsertForm">
-            <div class="input-group">
-              <!--  <input type="hidden" name="bno" value="${detail.bno}"/> -->
-               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
-               <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
-               </span>
-              </div>
-        </form>
-    </div>
-    <div class="container">
-        <div class="commentList"></div>
-    </div>
-	
+
+	<!-- 댓글 기능 -->
+
+	<div class="container" th:if="${board?.idx}">
+		<label for="content">comment</label>
+		<!-- <span th:text="|댓글 ${댓글 갯수 변수명 } 개|"></span> -->
+
+		<div class="form-group">
+			<!-- th:if="${board.user?.name}" -->
+			<!--  <input type="hidden" name="bno" value="${detail.bno}"/> -->
+			<textarea class="form-control" id="comment"placeholder="내용을 입력하세요."
+				></textarea>
+			<span class="form-group-btn">
+				<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>
+			</span>
+		</div>
+		<!-- <div class="panel panel-default">
+			<p th:unless="${board.user?.name}" class="panel-body text-center h4">로그인
+				후에 이용해주세요</p>
+		</div> -->
+
+		<div class="container">
+			<div class="commentList" th:each="comment : ${commentList}">
+				<div>
+					<span class="h4">유저이름</span> <span th:text="${comment?.date}"></span>
+					<p th:text="${comment?.comment}"></p>
+				</div>
+
+			</div>
+		</div>
+	</div>
 </body>
 
 <script src="/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
+	// 댓글 등록
+	$('#commentInsertBtn').click(
+			consol.log($('#comment').val().replace("\r\n","<br>"));
+			function() {
+				var jsonData = JSON.stringify({
+					comment : $('#comment').val().replace("\r\n","<br>")
+				});
+				$.ajax({
+					url : "/board/comment/insert",
+					type : "POST",
+					data : jsonData,
+					contentType : "application/json",
+					dataType : "json",
+					success : function(data) {
+						alert("댓글 등록");
+						location.reload(true);
+					},
+					error : function(request, status, error) {
+						alert("댓글 등록 실패");
+						console.log("code:" + request.status + "\n"
+								+ "message:" + request.responseText + "\n"
+								+ "error:" + error);
+					}
+				});
+			});
+
 	// 게시글 저장
 	$("#insert").click(
 			function() {
@@ -89,9 +132,9 @@
 					},
 					error : function(request, status, error) {
 						alert("제목을 작성했는지 확인해주세요.");
-						console.log("code:" + request.status + "\n" + "message:"
-								+ request.responseText + "\n" + "error:"
-								+ error);
+						console.log("code:" + request.status + "\n"
+								+ "message:" + request.responseText + "\n"
+								+ "error:" + error);
 					}
 
 				});
