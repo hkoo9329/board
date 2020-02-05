@@ -58,7 +58,7 @@
 
 	<div class="container" th:if="${board?.idx}">
 		<label for="content">comment</label>
-		<span th:text="|댓글 ${#lists.size(commentList)-1} 개|"></span>
+		<span th:text="|댓글 ${#lists.size(commentList)} 개|"></span>
 
 		<div class="form-group">
 			<!-- th:if="${board.user?.name}" -->
@@ -132,7 +132,8 @@
 	$('#commentInsertBtn').click(
 			function() {
 				var jsonData = JSON.stringify({
-					comment : $('#comment').val()
+					comment : $('#comment').val(),
+					board: $('#board_idx').val()
 				});
 				$.ajax({
 					url : "/board/comment/insert",
