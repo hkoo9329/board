@@ -1,27 +1,16 @@
 package com.leejuhyeok.board.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.aspectj.lang.annotation.Before;
-
 import com.leejuhyeok.board.domain.enums.Role;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
 @Entity
 @Getter
 @NoArgsConstructor
-public class User {
+public class User{
 	
 	@Id
 	@Column
@@ -36,7 +25,7 @@ public class User {
 	
 	@Column
 	private String picture;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
@@ -46,6 +35,7 @@ public class User {
 		this.nickName = nickName;
 		this.email = email;
 		this.picture = picture;
+		this.role = role;
 	}
 	
 	public User update(String nickName, String picture) {
@@ -53,9 +43,10 @@ public class User {
 		this.picture = picture;
 		return this;
 	}
-	
-	public String getRoleKey() {
+
+	public String getRoleKey(){
 		return this.role.getKey();
 	}
+
 	
 }
