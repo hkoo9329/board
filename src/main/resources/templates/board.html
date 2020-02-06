@@ -10,7 +10,7 @@
 
 <!-- 메인 게시글 -->
 <div class="container" style="height: 100%;">
-    
+
     <div class="page-header">
         <h1>게시글 등록</h1>
     </div>
@@ -64,7 +64,7 @@
     <label for="board_content">comment</label>
     <span th:text="|댓글 ${#lists.size(commentList)} 개|"></span>
 
-    <div class="form-group" >
+    <div class="form-group">
         <!-- th:if="${board.user?.name}" -->
         <!--  <input type="hidden" name="bno" value="${detail.bno}"/> -->
         <textarea class="form-control" id="commentTextBox" placeholder="내용을 입력하세요."
@@ -73,52 +73,49 @@
 				<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>
 			</span>
     </div>
-    
-</div> 
-    <br>
-    <div class="container" th:if="${#lists.size(commentList) > 0 }">
-        <div class="panel-body container-fluid">
-            <ul class="list-group">
-                <li class="list-group-item" th:each="comment : ${commentList}">
-                    <div class="row">
-                        <div class="col-xs-2 col-md-1">
-                            <img src="/images/default_user.jpg" class="img-circle img-responsive" alt=""/></div>
-                        <div class="col-xs-10 col-md-11">
-                            <!-- 댓글 버튼 부분 -->
-                            <div class="action pull-right">
-                                <button type="button" class="btn btn-primary btn-xs" title="Edit">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                                <button id="comment_delete" type="button" class="btn btn-danger btn-xs" 
-                                th:onclick="|javascript:commentDelete('${comment.idx}')|" title="Delete">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </div>
-                            <!-- 댓글 정보 부분 -->
-                            <div>
-                                <div class="mic-info">
-                                    <span class="text-primary" th:text=${comment.user?.nickName}></span> 
-                                    <span class="small" th:text="${#temporals.format(comment.date,'yyyy년 MM월 dd일 hh시 mm분')}" 
-                                    style="margin-left:10px;"></span>
-                                </div>
-                            </div>
-                            
-                            <!-- 댓글 content부분  -->
-                            <div class="comment-text" th:text="${comment.comment}" style="margin-top: 0.5em;">
 
+<br>
+<div class="container" th:if="${#lists.size(commentList) > 0 }">
+    <div class="panel-body container-fluid">
+        <ul class="list-group">
+            <li class="list-group-item" th:each="comment : ${commentList}">
+                <div class="row">
+                    <div class="col-xs-2 col-md-1">
+                        <img src="/images/default_user.jpg" class="img-circle img-responsive" alt=""/></div>
+                    <div class="col-xs-10 col-md-11">
+                        <!-- 댓글 버튼 부분 -->
+                        <div class="action pull-right">
+                            <button type="button" class="btn btn-primary btn-xs" title="Edit">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button id="comment_delete" type="button" class="btn btn-danger btn-xs"
+                                    th:onclick="|javascript:commentDelete('${comment.idx}')|" title="Delete">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </div>
+                        <!-- 댓글 정보 부분 -->
+                        <div>
+                            <div class="mic-info">
+                                <span class="text-primary" th:text=${comment.user?.nickName}></span>
+                                <span class="small" th:text="${#temporals.format(comment.date,'yyyy년 MM월 dd일 hh시 mm분')}"
+                                      style="margin-left:10px;"></span>
                             </div>
+                        </div>
+
+                        <!-- 댓글 content부분  -->
+                        <div class="comment-text" th:text="${comment.comment}" style="margin-top: 0.5em;">
 
                         </div>
+
                     </div>
-                </li>
-            </ul>
-            <!-- <a href="#" class="btn btn-primary btn-sm btn-block" role="button">
-            <span class="glyphicon glyphicon-refresh"></span> More</a> -->
-        </div>
+                </div>
+            </li>
+        </ul>
+        <!-- <a href="#" class="btn btn-primary btn-sm btn-block" role="button">
+        <span class="glyphicon glyphicon-refresh"></span> More</a> -->
     </div>
 </div>
-
-
+</div>
 
 <!-- <div class="container">
     <div class="commentList" th:each="comment : ${commentList}">
@@ -139,49 +136,49 @@
 
     // 댓글 등록
     $('#commentInsertBtn').click(function () {
-        if($('#commentTextBox').val() == ""){
-        	alert("댓글을 입력해주세요");
-        	return;
-        }    
-    	var jsonData = JSON.stringify({
-            	comment: $('#commentTextBox').val()
-            });
-            $.ajax({
-                url: "/board/comment/insert/"+$('#board_idx').val(),
-                type: "POST",
-                data: jsonData,
-                contentType: "application/json",
-                dataType: "json",
-                success: function (data) {
-                    alert("댓글 등록");
-                    location.reload(true);
-                },
-                error: function (request, status, error) {
-                    alert("댓글 등록 실패");
-                    console.log("code:" + request.status + "\n"
-                        + "message:" + request.responseText + "\n"
-                        + "error:" + error);
-                }
-            });
+        if ($('#commentTextBox').val() == "") {
+            alert("댓글을 입력해주세요");
+            return;
+        }
+        var jsonData = JSON.stringify({
+            comment: $('#commentTextBox').val()
         });
+        $.ajax({
+            url: "/board/comment/insert/" + $('#board_idx').val(),
+            type: "POST",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function (data) {
+                alert("댓글 등록");
+                location.reload(true);
+            },
+            error: function (request, status, error) {
+                alert("댓글 등록 실패");
+                console.log("code:" + request.status + "\n"
+                    + "message:" + request.responseText + "\n"
+                    + "error:" + error);
+            }
+        });
+    });
     // 댓글 업데이트
 
     // 댓글 삭제
-    function commentDelete(idx){
-    	alert(idx);
-    	 $.ajax({
-             url: "/board/comment/delete/"+idx,
-             success: function () {
-                 alert("댓글 삭제 성공");
-             },
-             error: function (request, status, error) {
-                 alert("댓글 삭제 실패");
-                 console.log("code:" + request.status + "\n"
-                     + "message:" + request.responseText + "\n"
-                     + "error:" + error);
-             }
+    function commentDelete(idx) {
+        alert(idx);
+        $.ajax({
+            url: "/board/comment/delete/" + idx,
+            success: function () {
+                alert("댓글 삭제 성공");
+            },
+            error: function (request, status, error) {
+                alert("댓글 삭제 실패");
+                console.log("code:" + request.status + "\n"
+                    + "message:" + request.responseText + "\n"
+                    + "error:" + error);
+            }
 
-         });
+        });
     }
 
     // 게시글 저장
@@ -192,7 +189,7 @@
                 content: $('#board_content').val()
             });
             $.ajax({
-                url: "/board/insert/"+$('#user_idx').val(),
+                url: "/board/insert/" + $('#user_idx').val(),
                 type: "POST",
                 data: jsonData,
                 contentType: "application/json",
