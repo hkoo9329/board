@@ -57,7 +57,7 @@ public class BoardController {
 	@RequestMapping("")
 	public String boardEdit(Model model) {
 		User user = (User) httpSession.getAttribute("user");
-		model.addAttribute("user", user);
+		model.addAttribute("user", userRepository.getByEmail(user.getEmail()));
 		return "board";
 	}
 
@@ -90,6 +90,7 @@ public class BoardController {
 		}
 
 		User user = (User) httpSession.getAttribute("user");
+		model.addAttribute("user", userRepository.getByEmail(user.getEmail()));
 		model.addAttribute("board", board);
 		model.addAttribute("commentList", commentRepository.findByBoardIdx(board.getIdx()));
 		return "board";

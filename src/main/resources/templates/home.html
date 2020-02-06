@@ -8,7 +8,13 @@
 <body>
 	<!-- main start-->
 	<div class="container">
+	<div style="margin-top: 1.1em;">
+	<a th:unless="${user?.idx}" class="pull-right d-print-inline btn btn-default" href="/login">로그인</a> 
+	<a th:if="${user?.idx}" class="pull-right d-print-inline btn btn-default" href="/logout">로그아웃</a>
+	</div>
 	<h1>게시판</h1>
+	
+	<br><br>
 		<div class="pull-right">
 			<a href="/board" class="btn btn-primary">게시글 작성</a>
 		</div>

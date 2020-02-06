@@ -11,5 +11,6 @@ import com.leejuhyeok.board.domain.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{
 	Optional<User> findByEmail(String email);
+	User getByEmail(String email);
 
 }

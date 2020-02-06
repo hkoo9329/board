@@ -6,6 +6,10 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <title>게시글 등록</title>
 </head>
+<style>
+	input[readonly] {background-color: white !important;}
+	textarea[readonly]{background-color: white !important;}
+</style>
 <body>
 
 <!-- 메인 게시글 -->
@@ -21,16 +25,19 @@
         <button th:if="!${board?.idx}" type="button" class="btn btn-primary"
                 id="insert">저장
         </button>
-        <button th:if="${board?.idx}" type="button" class="btn btn-info"
+        <div th:if="${board?.user?.idx} == ${user?.idx}">
+        	<button th:if="${board?.idx}" type="button" class="btn btn-info"
                 id="update">수정
-        </button>
-        <button th:if="${board?.idx}" type="button" class="btn btn-danger"
+        	</button>
+        	<button th:if="${board?.idx}" type="button" class="btn btn-danger"
                 id="delete">삭제
-        </button>
+        	</button>
+        </div>
     </div>
     <br/> <br/>
     <input id="board_idx" type="hidden" th:value="${board?.idx}"/>
     <input id="user_idx" type="hidden" th:value="${user?.idx}"/>
+    <input id="board_user_idx" type="hidden" th:value="${board?.user?.idx}"/>
     <table class="table table-bordered">
         <tr>
             <th class="col-md-1">조회수</th>
@@ -43,8 +50,11 @@
         </tr>
         <tr>
             <th style="padding: 13px 0 0 15px;">제목</th>
-            <td colspan="5"><input id="board_title" type="text"
-                                   class="col-md-1 form-control input-sm" th:value="${board?.title}"/></td>
+            <td colspan="5">
+            	<input
+            	id="board_title" type="text" class="col-md-1 form-control input-sm" th:value="${board?.title}"/>
+            	
+            </td>
         </tr>
         <tr>
             <th style="padding: 13px 0 0 15px;">내용</th>
@@ -64,7 +74,7 @@
     <label for="board_content">comment</label>
     <span th:text="|댓글 ${#lists.size(commentList)} 개|"></span>
 
-    <div class="form-group">
+    <div class="form-group" th:if="${board.user.idx}">
         <!-- th:if="${board.user?.name}" -->
         <!--  <input type="hidden" name="bno" value="${detail.bno}"/> -->
         <textarea class="form-control" id="commentTextBox" placeholder="내용을 입력하세요."
@@ -84,7 +94,7 @@
                         <img src="/images/default_user.jpg" class="img-circle img-responsive" alt=""/></div>
                     <div class="col-xs-10 col-md-11">
                         <!-- 댓글 버튼 부분 -->
-                        <div class="action pull-right">
+                        <div class="action pull-right" th:if="${comment?.user?.idx} == ${user?.idx}">
                             <button type="button" class="btn btn-primary btn-xs" title="Edit">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
@@ -133,6 +143,17 @@
 
 <script src="/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
+	
+	$(document).ready(function(){
+		if($('#board_user_idx').val() == $('#user_idx').val() || $('#board_user_idx').val()== ""){
+			document.getElementById('board_title').readOnly = false;
+			document.getElementById('board_content').readOnly= false;
+		}else{
+			document.getElementById('board_title').readOnly = true;
+			document.getElementById('board_content').readOnly= true;
+		}
+	});
+
 
     // 댓글 등록
     $('#commentInsertBtn').click(function () {
@@ -165,7 +186,6 @@
 
     // 댓글 삭제
     function commentDelete(idx) {
-        alert(idx);
         $.ajax({
             url: "/board/comment/delete/" + idx,
             success: function () {
