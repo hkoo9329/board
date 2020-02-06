@@ -13,7 +13,9 @@ import com.leejuhyeok.board.domain.Board;
 import com.leejuhyeok.board.domain.SessionUser;
 import com.leejuhyeok.board.domain.User;
 import com.leejuhyeok.board.repository.CommentRepository;
+import com.leejuhyeok.board.repository.UserRepository;
 import com.leejuhyeok.board.service.BoardService;
+import com.mysql.cj.util.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,6 +40,9 @@ import org.springframework.ui.Model;
 @RequestMapping("/board")
 public class BoardController {
 
+	@Autowired
+	private UserRepository userRepository;
+	
 	@Autowired
 	private BoardService boardService;
 
@@ -75,14 +80,14 @@ public class BoardController {
 		String new_cookie_read_count = "|" + idx;
 
 		// ���옣�맂 荑좏궎�뿉 �깉濡쒖슫 荑좏궎媛믪씠 議댁옱�븯�뒗 吏� 寃��궗
-//		if (StringUtils.indexOfIgnoreCase(cookie_read_count, new_cookie_read_count) == -1) {
-//			// �뾾�쓣 寃쎌슦 荑좏궎 �깮�꽦
-//			Cookie cookie = new Cookie("read_count", cookie_read_count + new_cookie_read_count);
-//
-//			response.addCookie(cookie);
-//			//議고쉶�닔 �뾽�뜲�씠�듃
-//			boardService.viewsUpdate(idx);
-//		}
+		if (StringUtils.indexOfIgnoreCase(cookie_read_count, new_cookie_read_count) == -1) {
+			// �뾾�쓣 寃쎌슦 荑좏궎 �깮�꽦
+			Cookie cookie = new Cookie("read_count", cookie_read_count + new_cookie_read_count);
+
+			response.addCookie(cookie);
+			//議고쉶�닔 �뾽�뜲�씠�듃
+			boardService.viewsUpdate(idx);
+		}
 
 		User user = (User) httpSession.getAttribute("user");
 		model.addAttribute("board", board);
@@ -90,16 +95,14 @@ public class BoardController {
 		return "board";
 	}
 
-	@PostMapping("/insert")
-	public ResponseEntity<?> boardInsert(@RequestBody Board board) {
-		if(board.getUser().equals(null)) {
-			log.info("유저가 존재하지 않음");
-		}else {
-			log.info("유저는 존재");
-			log.info(board.getUser().getNickName());
-			log.info(board.getUser().getIdx()+"");
-		}
-		boardService.insertBoard(board);
+	@PostMapping("/insert/{idx}")
+	public ResponseEntity<?> boardInsert(@RequestBody Board board, @PathVariable("idx") Long userIdx) {
+		
+		boardService.insertBoard(Board.builder()
+				.title(board.getTitle())
+				.content(board.getContent())
+				.user(userRepository.getOne(userIdx))
+				.build());
 		return new ResponseEntity<>("{}", HttpStatus.CREATED);
 	}
 

@@ -1,25 +1,39 @@
 
-server:  port: 8080
+server:
+  port: 8080
   
-spring:  jpa:    show-sql: true
+spring:
+  jpa:
+    show-sql: true
     database: mysql
     generate-ddl: true
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-  datasource:    url: jdbc:mysql://localhost:3306/board_db?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&serverTimezone=UTC&useLegacyDatetimeCode=false
+  datasource:
+    url: jdbc:mysql://localhost:3306/board_db?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&serverTimezone=UTC&useLegacyDatetimeCode=false
     username: hkoo
     password: dlwngur12
     driver-class-name: com.mysql.cj.jdbc.Driver
     
-  thymeleaf:    cache: false
+  thymeleaf:
+    cache: false
     
   security:
     oauth2:
       client:
         registration:
           google:
-            client-id: 494197804420-1ke3o3d15mt52k0n5k54ip8920ciujjp.apps.googleusercontent.com
-            client-secret: sdZkIXaOdfTnBiIsP8VUdok8
+            client-id: 797886434812-6o15j43bajhlnuli91n9h6bumajn5s10.apps.googleusercontent.com
+            client-secret: ktDblLpzPI9P2vWSzjVt5FnR
             scope: profile, email
           github:
             client-id: 751884639d49a11cafdb
             client-secret: 8b21e4cc9bcabb3bdc8991f0a11784295607a998
+
+
+custom:
+  oauth2:
+    kakao:
+      client-id: 18b1b2deaa6aec3e53d07899549f8587
+    naver:
+      client-id: HylBNrnld2nVNQPLdZ6V
+      client-secret: GgJ8FmAMz5
