@@ -10,7 +10,8 @@
 
 <!-- 메인 게시글 -->
 <div class="container" style="height: 100%;">
-
+	<input id="user" type="hidden" th:object="${user}"></input>
+    
     <div class="page-header">
         <h1>게시글 등록</h1>
     </div>
@@ -29,7 +30,9 @@
         </button>
     </div>
     <br/> <br/>
+    <input id="user" type="hidden" th:object="${user}"/>
     <input id="board_idx" type="hidden" th:value="${board?.idx}"/>
+    <input id="user_idx" type="hidden" th:value="${user?.idx}"/>
     <table class="table table-bordered">
         <tr>
             <th class="col-md-1">조회수</th>
@@ -38,7 +41,7 @@
             <td class="col-md-3"
                 th:text="${board?.date} ? ${#temporals.format(board.date,'yyyy년 MM월 dd일 hh시 mm분')} : ''"></td>
             <th class="col-md-2">작성자</th>
-            <td class="col-md-3">유저이름</td>
+            <td class="col-md-3"></td>
         </tr>
         <tr>
             <th style="padding: 13px 0 0 15px;">제목</th>
@@ -81,12 +84,6 @@
                         <div class="col-xs-2 col-md-1">
                             <img src="/images/default_user.jpg" class="img-circle img-responsive" alt=""/></div>
                         <div class="col-xs-10 col-md-11">
-                            <!-- 댓글 정보 부분 -->
-                            <div>
-                                <div class="mic-info">
-                                    <a>유저이름</a> <span th:text="${comment.date}" style="margin-left:10px;"></span>
-                                </div>
-                            </div>
                             <!-- 댓글 버튼 부분 -->
                             <div class="action pull-right">
                                 <button type="button" class="btn btn-primary btn-xs" title="Edit">
@@ -96,6 +93,15 @@
                                     <span class="glyphicon glyphicon-trash"></span>
                                 </button>
                             </div>
+                            <!-- 댓글 정보 부분 -->
+                            <div>
+                                <div class="mic-info">
+                                    <span class="text-primary">유저이름</span> 
+                                    <span class="small" th:text="${#temporals.format(comment.date,'yyyy년 MM월 dd일 hh시 mm분')}" 
+                                    style="margin-left:10px;"></span>
+                                </div>
+                            </div>
+                            
                             <!-- 댓글 content부분  -->
                             <div class="comment-text" th:text="${comment.comment}" style="margin-top: 0.5em;">
 
@@ -105,8 +111,8 @@
                     </div>
                 </li>
             </ul>
-            <a href="#" class="btn btn-primary btn-sm btn-block" role="button"><span
-                    class="glyphicon glyphicon-refresh"></span> More</a>
+            <a href="#" class="btn btn-primary btn-sm btn-block" role="button">
+            <span class="glyphicon glyphicon-refresh"></span> More</a>
         </div>
     </div>
 </div>
@@ -169,7 +175,8 @@
         function () {
             var jsonData = JSON.stringify({
                 title: $('#board_title').val(),
-                content: $('#board_content').val()
+                content: $('#board_content').val(),
+                user: $('#user')
             });
             $.ajax({
                 url: "/board/insert",
