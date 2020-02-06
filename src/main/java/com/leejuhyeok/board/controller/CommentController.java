@@ -44,7 +44,6 @@ public class CommentController {
     @RequestMapping("/delete/{idx}")
     public ResponseEntity<?> commentDelete(@PathVariable("idx") Long idx) throws Exception {
         commentRepository.deleteById(idx);
-        ;
         return new ResponseEntity<>("{}", HttpStatus.OK);
     }
 

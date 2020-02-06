@@ -20,15 +20,10 @@ public class HomeController {
 
 	@Autowired
 	private BoardService boardService;
-	private final HttpSession httpSession;
 	
 	@RequestMapping("/")
 	public String home(@PageableDefault Pageable pageable,Model model) {
 		model.addAttribute("boardList", boardService.findBoardList(pageable));
-		SessionUser user = (SessionUser) httpSession.getAttribute("user");
-		if (user != null){
-			model.addAttribute("userName", user.getName());
-		}
 		return "home";
 	}
 
