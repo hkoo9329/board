@@ -65,27 +65,28 @@ public class BoardController {
 	public String getBoardPage(HttpServletResponse response, HttpServletRequest request,
 		@PathVariable("idx") Long idx,Model model) {
 		Board board = boardService.getOne(idx);
+		
 		Cookie cookies[] = request.getCookies();
 		Map<String, String> mapCookie = new HashMap();
-		// ���옣�맂 荑좏궎 遺덈윭�삤湲�
+		// 저장된 쿠키 불러오기
 		if (request.getCookies() != null) {
 			for (int i = 0; i < cookies.length; i++) {
 				Cookie obj = cookies[i];
 				mapCookie.put(obj.getName(), obj.getValue());
 			}
 		}
-		// ���옣�맂 荑좏궎以묒뿉 read_count 留� 遺덈윭�삤湲�
+		// 저장된 쿠키중에 read_count 만 불러오기
 		String cookie_read_count = (String) mapCookie.get("read_count");
-		// ���옣�맆 �깉濡쒖슫 荑좏궎媛� �깮�꽦
+		// 저장될 새로운 쿠키값 생성
 		String new_cookie_read_count = "|" + idx;
 
-		// ���옣�맂 荑좏궎�뿉 �깉濡쒖슫 荑좏궎媛믪씠 議댁옱�븯�뒗 吏� 寃��궗
+		//저장된 쿠키에 새로운 쿠키값이 존재하는 지 검사
 		if (StringUtils.indexOfIgnoreCase(cookie_read_count, new_cookie_read_count) == -1) {
-			// �뾾�쓣 寃쎌슦 荑좏궎 �깮�꽦
+			// 없을 경우 쿠키 생성
 			Cookie cookie = new Cookie("read_count", cookie_read_count + new_cookie_read_count);
 
 			response.addCookie(cookie);
-			//議고쉶�닔 �뾽�뜲�씠�듃
+			//조회수 업데이트
 			boardService.viewsUpdate(idx);
 		}
 
@@ -118,5 +119,7 @@ public class BoardController {
 		boardService.deleteBoard(idx);
 		return new ResponseEntity<>("{}", HttpStatus.OK);
 	}
+	
+	
 
 }

@@ -6,10 +6,7 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     <title>게시글 등록</title>
 </head>
-<style>
-	input[readonly] {background-color: white !important;}
-	textarea[readonly]{background-color: white !important;}
-</style>
+
 <body>
 
 <!-- 메인 게시글 -->
@@ -48,20 +45,29 @@
             <th class="col-md-2">작성자</th>
             <td class="col-md-3" th:text="${board?.user?.nickName}"></td>
         </tr>
-        <tr>
+        <!-- 게시글 작성자에게 보이는 폼 -->
+        <tr id="user_form_title">
             <th style="padding: 13px 0 0 15px;">제목</th>
-            <td colspan="5">
-            	<input
-            	id="board_title" type="text" class="col-md-1 form-control input-sm" th:value="${board?.title}"/>
-            	
+            <td colspan="5" >
+            	<input id="board_title" type="text" class="col-md-1 form-control input-sm" th:value="${board?.title}"/>
             </td>
+            
         </tr>
-        <tr>
+        <tr id="user_form_content">
             <th style="padding: 13px 0 0 15px;">내용</th>
             <td colspan="5"><textarea id="board_content"
                                       class="col-md-1 form-control input-sm" rows="7"
                                       style="height: 300px;" th:text="${board?.content}"></textarea><span
                     class="h-100 d-inline-block"></span></td>
+        </tr>
+        <!-- 일반 사용자들에게 보이는 폼 -->
+        <tr id="viewer_form_title">
+        	<th style="padding: 13px 0 0 15px;">제목</th>
+            	<td colspan="5"  th:text="${board?.title}"></td>
+        </tr>
+        <tr id="viewer_form_content">
+            <th style="padding: 13px 0 0 15px; height: 200px;">내용</th>
+            <td colspan="5" th:text="${board?.content}"></td>
         </tr>
 
     </table>
@@ -145,13 +151,24 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-		if($('#board_user_idx').val() == $('#user_idx').val() || $('#board_user_idx').val()== ""){
+		if($('#board_user_idx').val() == $('#user_idx').val() || $('#board_user_idx').val() == ""){
+			$('#user_form_title').show();
+			$('#user_form_content').show();
+			$('#viewer_form_title').hide();
+			$('#viewer_form_content').hide();
+		}else{
+			$('#user_form_title').hide();
+			$('#user_form_content').hide();
+			$('#viewer_form_title').show();
+			$('#viewer_form_content').show();
+		}
+		/* if($('#board_user_idx').val() == $('#user_idx').val() || $('#board_user_idx').val()== ""){
 			document.getElementById('board_title').readOnly = false;
 			document.getElementById('board_content').readOnly= false;
 		}else{
 			document.getElementById('board_title').readOnly = true;
 			document.getElementById('board_content').readOnly= true;
-		}
+		} */
 	});
 
 
@@ -190,6 +207,7 @@
             url: "/board/comment/delete/" + idx,
             success: function () {
                 alert("댓글 삭제 성공");
+                location.reload(true);
             },
             error: function (request, status, error) {
                 alert("댓글 삭제 실패");
