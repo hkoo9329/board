@@ -16,4 +16,5 @@ import com.leejuhyeok.board.domain.Comment;
 public interface CommentRepository extends JpaRepository<Comment, Long>{
 	List<Comment> findByBoardIdx(Long boardIdx);
 	Optional<Comment> findByIdxAndBoardIdx(Long id, Long boardIdx);
+	void deleteByBoardIdx(Long boardIdx);
 }

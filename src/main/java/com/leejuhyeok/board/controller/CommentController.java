@@ -35,13 +35,14 @@ public class CommentController {
 
     @Autowired
     private CommentRepository commentRepository;
+    
     @Autowired
 	private HttpSession httpSession;
 
     @RequestMapping("/insert/{idx}")
     public ResponseEntity<?> commentInsert(@RequestBody Comment comment ,@PathVariable("idx") Long boardIdx) throws Exception {
     	User user = (User) httpSession.getAttribute("user");
-    	log.info(user.getNickName());
+    	
     	commentRepository.save(Comment.builder()
                 .comment(comment.getComment())
                 .user(user)

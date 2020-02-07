@@ -24,8 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable().headers().frameOptions().disable()
+        http	
+                .csrf().disable().headers().frameOptions().disable() // 불필요 설정 제거 
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**","/login/**").permitAll()

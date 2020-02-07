@@ -1,5 +1,7 @@
 package com.leejuhyeok.board.service;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -8,7 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.leejuhyeok.board.domain.Board;
+import com.leejuhyeok.board.domain.Comment;
 import com.leejuhyeok.board.repository.BoardRepository;
+import com.leejuhyeok.board.repository.CommentRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -17,6 +21,9 @@ public class BoardServiceImpl implements BoardService{
 
 	@Autowired
 	private BoardRepository boardRepository;
+	
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	@Override
 	public void insertBoard(Board board) {
@@ -36,8 +43,10 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	@Transactional
 	public void deleteBoard(Long boardId) {
 		// TODO Auto-generated method stub
+		commentRepository.deleteByBoardIdx(boardId);
 		boardRepository.deleteById(boardId);
 	}
 

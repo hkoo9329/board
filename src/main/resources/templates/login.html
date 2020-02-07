@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="/css/bootstrap.min.css" />
@@ -12,10 +12,20 @@
 	<hr>
 	<p>소셜 간편 로그인</p>
 	<div style="margin-top: 1.5em;">
-		<a href="/oauth2/authorization/github"><img class="w-25 p-3 center-block" src="/images/button/github_button.png"></a>
-		<a href="/oauth2/authorization/google"><img class="w-25 p-3 center-block" src="/images/button/google_button.png"></a>
+		<a href="javascript:;" class="btn_social" data-social="github">
+			<img class="w-25 p-3 center-block" src="/images/button/github_button.png"></a>
+		<a href="javascript:;" class="btn_social" data-social="google">
+			<img class="w-25 p-3 center-block" src="/images/button/google_button.png"></a>
 	</div>
 </div>
 
 </body>
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script>
+	$('.btn_social').click(function(){
+		var socialType = $(this).data('social');
+		location.replace("/oauth2/authorization/" + socialType);
+	});
+	
+</script>
 </html>

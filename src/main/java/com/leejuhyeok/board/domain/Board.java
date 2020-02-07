@@ -49,16 +49,18 @@ public class Board {
 	@OneToOne
 	private User user;
 	
-	
-	
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Comment> comments;
+
 	@Builder
 	public Board(String title, String userName, String content, LocalDateTime date, Long views,
-			User user) {
+			User user, List<Comment> comments) {
 		this.title = title;
 		this.content = content;
 		this.date = date;
 		this.user = user;
 		this.views = views;
+		this.comments = comments;
 	}
 	
 	public void setCreateDateTime() {

@@ -32,7 +32,6 @@ public class Comment {
     private String comment;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(nullable = false)
     private Board board;
 
     @OneToOne

@@ -87,8 +87,10 @@ public class BoardController {
 
 			response.addCookie(cookie);
 			//조회수 업데이트
-			boardService.viewsUpdate(idx);
+//			boardService.viewsUpdate(idx);
 		}
+		//조회수 업데이트
+		boardService.viewsUpdate(idx);
 
 		User user = (User) httpSession.getAttribute("user");
 		model.addAttribute("user", userRepository.getByEmail(user.getEmail()));
